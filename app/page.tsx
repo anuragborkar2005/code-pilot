@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Logout } from "@/modules/auth/components/logout";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
 
-export default function Home() {
+export default async function Home() {
+    await requireAuth();
     return (
         <div className="flex flex-col items-center justify-center">
-            <Button>Hello World</Button>
+            <Logout>
+                <Button>Logout</Button>
+            </Logout>
         </div>
     );
 }
