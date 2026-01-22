@@ -12,4 +12,7 @@ export const auth = betterAuth({
             scope: ["repo", "user"],
         },
     },
+    experimental: {
+        joins: true,
+    },
 });

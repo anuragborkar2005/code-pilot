@@ -2,28 +2,15 @@
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
-const getSession = async () => {
-    const h = await headers();
-
-    return auth.api.getSession({
-        headers: Object.fromEntries(h.entries()),
-    });
-};
-
-export const requireAuth = async () => {
-    const session = await getSession();
-
-    if (!session) {
-        redirect("/login");
-    }
-};
-
-export const requireUnAuth = async () => {
-    const session = await getSession();
-
-    if (session) {
-        redirect("/");
+export const getSession = async () => {
+    try {
+        const h = await headers();
+        return await auth.api.getSession({
+            headers: Object.fromEntries(h.entries()),
+        });
+    } catch (error) {
+        console.error("Session error:", error);
+        return null;
     }
 };

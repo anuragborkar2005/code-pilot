@@ -1,7 +1,7 @@
 import { neonConfig, Pool } from "@neondatabase/serverless";
 import { PrismaNeon } from "@prisma/adapter-neon";
-import { PrismaClient } from "./generated/prisma/client";
 import ws from "ws";
+import { PrismaClient } from "./generated/prisma/client";
 
 if (typeof window === "undefined") {
     neonConfig.webSocketConstructor = ws;
@@ -20,6 +20,10 @@ const prismaClientSingleton = () => {
     return new PrismaClient({
         adapter,
         log: ["query", "error", "warn", "info"],
+        transactionOptions: {
+            maxWait: 5000,
+            timeout: 10000,
+        },
     });
 };
 
